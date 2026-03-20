@@ -12,185 +12,76 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@300;400;500;700&family=Cormorant+Garamond:ital,wght@0,300;0,500;1,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #0d1b2a;
-    --card: #13243a;
-    --card2: #0f1e30;
-    --gold: #c9a84c;
-    --gold-l: #e8d08a;
-    --cream: #f0ead8;
-    --dim: #8a9bb0;
-    --red: #e05c4b;
-    --green: #4caf82;
+    --bg: #0d1b2a; --card: #13243a; --card2: #0f1e30;
+    --gold: #c9a84c; --gold-l: #e8d08a; --cream: #f0ead8;
+    --dim: #8a9bb0; --red: #e05c4b; --green: #4caf82;
     --border: rgba(201,168,76,0.18);
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    background: var(--bg); color: var(--cream);
-    font-family: 'Noto Sans SC', sans-serif;
-    min-height: 100vh;
+  body { background: var(--bg); color: var(--cream); font-family: 'Noto Sans SC', sans-serif; min-height: 100vh; }
+
+  .page {
+    max-width: 680px; margin: 0 auto;
+    padding: max(40px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(80px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
   }
 
-  .page { max-width: 680px; margin: 0 auto; padding: 40px 24px 80px; }
-
-  /* ── Header ── */
-  h1 {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px; font-weight: 300; text-align: center;
-    color: var(--cream); margin-bottom: 6px; letter-spacing: 0.03em;
-  }
+  h1 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; text-align: center; color: var(--cream); margin-bottom: 6px; letter-spacing: 0.03em; }
   h1 em { font-style: italic; color: var(--gold-l); }
-  .sub {
-    text-align: center; font-size: 12px; color: var(--dim);
-    font-family: 'DM Mono', monospace; letter-spacing: 0.12em;
-    margin-bottom: 36px;
-  }
+  .sub { text-align: center; font-size: 12px; color: var(--dim); font-family: 'DM Mono', monospace; letter-spacing: 0.12em; margin-bottom: 36px; }
 
-  /* ── Input card ── */
-  .input-card {
-    background: var(--card);
-    border: 1px solid var(--border);
-    border-radius: 8px; padding: 28px 28px 24px;
-    margin-bottom: 28px;
-  }
-  .input-row { display: flex; gap: 16px; align-items: flex-end; }
+  /* Input */
+  .input-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px 24px 20px; margin-bottom: 16px; }
+  .input-row { display: flex; gap: 12px; align-items: flex-end; }
   .field { display: flex; flex-direction: column; gap: 7px; flex: 1; }
-  .field label {
-    font-family: 'DM Mono', monospace; font-size: 9px;
-    letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold);
-  }
-  .field input {
-    background: var(--card2); border: 1px solid rgba(201,168,76,0.22);
-    border-radius: 6px; padding: 12px 14px; color: var(--cream);
-    font-family: 'Noto Sans SC', sans-serif; font-size: 15px;
-    outline: none; transition: border-color 0.2s; width: 100%;
-  }
+  .field label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+  .field input { background: var(--card2); border: 1px solid rgba(201,168,76,0.22); border-radius: 6px; padding: 12px 14px; color: var(--cream); font-family: 'Noto Sans SC', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s; width: 100%; }
   .field input:focus { border-color: var(--gold); }
-  .field input::placeholder { color: rgba(240,234,216,0.28); }
   .price-wrap { position: relative; }
-  .price-wrap::before {
-    content: '$'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%);
-    color: var(--gold); font-family: 'DM Mono', monospace; font-size: 13px; pointer-events: none;
-  }
-  .price-wrap input { padding-left: 26px; font-size: 20px; font-weight: 500; color: var(--gold-l); }
+  .price-wrap::before { content: '$'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--gold); font-family: 'DM Mono', monospace; font-size: 13px; pointer-events: none; }
+  .price-wrap input { padding-left: 26px; font-size: 22px; font-weight: 500; color: var(--gold-l); }
+  .add-btn { padding: 13px 22px; background: var(--gold); border: none; border-radius: 6px; color: #0d1b2a; font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
+  .add-btn:active { opacity: 0.75; }
 
-  /* ── Budget bar ── */
-  .budget-wrap { margin-top: 20px; }
-  .budget-meta {
-    display: flex; justify-content: space-between; align-items: baseline;
-    margin-bottom: 8px;
-  }
-  .budget-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--dim); }
-  .budget-numbers { font-family: 'DM Mono', monospace; font-size: 11px; }
-  .budget-track {
-    height: 10px; background: rgba(255,255,255,0.06);
-    border-radius: 5px; overflow: hidden; position: relative;
-  }
-  .budget-base {
-    position: absolute; top: 0; left: 0; height: 100%;
-    background: rgba(76,175,130,0.35); border-radius: 5px;
-    transition: width 0.5s ease;
-  }
-  .budget-item {
-    position: absolute; top: 0; height: 100%;
-    background: var(--red); border-radius: 0 5px 5px 0;
-    transition: left 0.5s ease, width 0.5s ease;
-  }
-  .budget-legend {
-    display: flex; gap: 16px; margin-top: 8px;
-    font-family: 'DM Mono', monospace; font-size: 9px; color: var(--dim);
-  }
-  .legend-dot {
-    width: 8px; height: 8px; border-radius: 50%; display: inline-block;
-    margin-right: 5px; vertical-align: middle;
-  }
+  /* History */
+  .history { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; margin-bottom: 24px; }
+  .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .history-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
+  .reset-btn { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--red); background: none; border: 1px solid rgba(224,92,75,0.3); border-radius: 4px; padding: 4px 10px; cursor: pointer; letter-spacing: 0.05em; }
+  .reset-btn:active { opacity: 0.7; }
 
-  /* ── Section title ── */
-  .sec {
-    font-family: 'DM Mono', monospace; font-size: 10px;
-    letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold);
-    margin-bottom: 16px; display: flex; align-items: center; gap: 10px;
-  }
+  .purchase-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
+  .purchase-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: var(--card2); border-radius: 6px; }
+  .purchase-info { display: flex; gap: 10px; align-items: baseline; }
+  .purchase-amount { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--gold-l); }
+  .purchase-date { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--dim); }
+  .delete-btn { background: none; border: none; color: var(--dim); font-size: 20px; cursor: pointer; padding: 0 2px; line-height: 1; }
+  .delete-btn:active { color: var(--red); }
+
+  .total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
+  .total-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); }
+  .total-amount { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--red); }
+
+  /* Section */
+  .sec { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
   .sec::after { content: ''; flex: 1; height: 1px; background: var(--border); }
 
-  /* ── Emoji grid trade-off ── */
-  .tradeoff-card {
-    background: var(--card); border: 1px solid var(--border);
-    border-radius: 8px; padding: 24px 24px 20px; margin-bottom: 20px;
-  }
-  .tradeoff-label {
-    font-size: 13px; color: var(--dim); margin-bottom: 14px;
-    display: flex; align-items: center; gap: 8px;
-  }
-  .tradeoff-label .item-name { color: var(--red); font-weight: 500; }
-  .tradeoff-label .arrow { color: var(--gold); font-size: 16px; }
-
-  .emoji-row {
-    display: flex; flex-wrap: wrap; gap: 6px;
-    min-height: 36px; align-items: center;
-  }
-  .emoji-bubble {
-    width: 36px; height: 36px; border-radius: 8px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 20px; transition: all 0.3s ease;
-    position: relative;
-  }
+  /* Cards */
+  .tradeoff-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 20px 16px; margin-bottom: 16px; }
+  .tradeoff-label { font-size: 13px; color: var(--dim); margin-bottom: 14px; line-height: 1.6; }
+  .emoji-row { display: flex; flex-wrap: wrap; gap: 5px; min-height: 34px; align-items: center; }
+  .emoji-bubble { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 19px; position: relative; }
   .emoji-bubble.kept { background: rgba(76,175,130,0.15); border: 1px solid rgba(76,175,130,0.3); }
-  .emoji-bubble.lost {
-    background: rgba(224,92,75,0.12); border: 1px solid rgba(224,92,75,0.3);
-    opacity: 0.45; position: relative;
-  }
-  .emoji-bubble.lost::after {
-    content: '✕';
-    position: absolute; inset: 0;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px; color: var(--red); font-weight: 700;
-    background: rgba(13,27,42,0.55); border-radius: 7px;
-  }
-  .emoji-bubble.partial {
-    background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.3);
-    opacity: 0.7;
-  }
-  .emoji-bubble.item-bubble {
-    background: rgba(224,92,75,0.18); border: 1px solid rgba(224,92,75,0.4);
-    width: auto; padding: 0 12px; font-size: 13px;
-    color: var(--red); font-family: 'Noto Sans SC', sans-serif; font-weight: 500;
-    white-space: nowrap; height: 36px;
-  }
+  .emoji-bubble.lost { background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.3); opacity: 0.4; }
+  .emoji-bubble.lost::after { content: '✕'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--red); font-weight: 700; background: rgba(13,27,42,0.5); border-radius: 7px; }
+  .tradeoff-foot { margin-top: 10px; font-size: 11px; color: var(--dim); font-family: 'DM Mono', monospace; }
+  .tradeoff-foot span { color: var(--cream); }
 
-  .tradeoff-foot {
-    margin-top: 12px; font-size: 12px; color: var(--dim);
-    font-family: 'DM Mono', monospace;
-  }
-  .tradeoff-foot span { color: var(--cream); font-weight: 500; }
-
-  /* ── Summary sentence ── */
-  .summary {
-    background: rgba(201,168,76,0.06); border-left: 3px solid var(--gold);
-    border-radius: 0 8px 8px 0; padding: 18px 22px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 18px; font-style: italic; line-height: 1.65; color: var(--cream);
-    margin-bottom: 28px;
-  }
-  .summary .hl { color: var(--red); font-style: normal; font-weight: 500; }
-  .summary .hlg { color: var(--gold-l); font-style: normal; }
-
-  /* ── Empty ── */
+  /* Empty */
   .empty { text-align: center; padding: 50px 0 30px; }
   .empty-icon { font-size: 40px; opacity: 0.25; margin-bottom: 14px; }
   .empty-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--dim); }
 
-
-  /* iOS safe area */
-  .page {
-    padding-top: max(40px, env(safe-area-inset-top));
-    padding-bottom: max(80px, env(safe-area-inset-bottom));
-    padding-left: max(24px, env(safe-area-inset-left));
-    padding-right: max(24px, env(safe-area-inset-right));
-  }
-  @media (max-width: 500px) {
-    .input-row { flex-direction: column; }
-    h1 { font-size: 26px; }
-  }
+  @media (max-width: 500px) { h1 { font-size: 26px; } }
 </style>
 </head>
 <body>
@@ -199,155 +90,168 @@
   <h1>买了这个，<em>就少吃这些</em></h1>
   <div class="sub">月预算 $5,500 · 可支配 $3,677 · 基于真实消费数据</div>
 
-  <!-- Input -->
   <div class="input-card">
     <div class="input-row">
-      <div class="field" style="max-width:200px">
-        <label>价格</label>
+      <div class="field">
+        <label>这件东西多少钱</label>
         <div class="price-wrap">
-          <input id="price" type="number" placeholder="0" min="0" step="1" autocomplete="off">
+          <input id="price" type="number" placeholder="0" min="0" step="1" inputmode="numeric">
         </div>
       </div>
-    </div>
-
-    <!-- Budget bar -->
-    <div class="budget-wrap" id="budgetWrap" style="display:none">
-      <div class="budget-meta">
-        <span class="budget-label">本月可支配预算</span>
-        <span class="budget-numbers" id="budgetNumbers"></span>
-      </div>
-      <div class="budget-track">
-        <div class="budget-base" id="budgetBase"></div>
-        <div class="budget-item" id="budgetItem"></div>
-      </div>
-      <div class="budget-legend">
-        <span><span class="legend-dot" style="background:rgba(76,175,130,0.6)"></span>剩余预算</span>
-        <span><span class="legend-dot" style="background:var(--red)"></span>这件东西花掉的</span>
-      </div>
+      <button class="add-btn" id="addBtn">加入</button>
     </div>
   </div>
 
-  <!-- Empty state -->
+  <div class="history" id="historySection" style="display:none">
+    <div class="history-header">
+      <span class="history-title">本月已买</span>
+      <button class="reset-btn" id="resetBtn">清空本月</button>
+    </div>
+    <div class="purchase-list" id="purchaseList"></div>
+    <div class="total-row">
+      <span class="total-label">累计花掉</span>
+      <span class="total-amount" id="totalAmount">$0</span>
+    </div>
+  </div>
+
   <div class="empty" id="empty">
     <div class="empty-icon">🛒</div>
     <div class="empty-text">输入价格，看看少吃什么</div>
   </div>
 
-  <!-- Results -->
   <div id="results" style="display:none">
-
-    <div class="sec">买了它，你这个月就少了…</div>
-
+    <div class="sec">加起来，这个月就少了…</div>
     <div id="cards"></div>
-
-    <div class="summary" id="summary"></div>
-
   </div>
-</div>
 
+</div>
 <script>
-  // Reference items — all real averages from transaction history
   const ITEMS = [
-    { emoji: '🛵', name: '外卖 / 快餐', price: 16.71, unit: '单',  monthly: 22 },
-    { emoji: '🍜', name: '餐厅（自己的份）', price: 22.70, unit: '顿',  monthly: 12 },
-    { emoji: '☕', name: '奶茶',      price: 10.26, unit: '杯',  monthly: 10 },
-    { emoji: '🎭', name: '娱乐活动',  price: 74.15, unit: '次',  monthly: 2  },
+    { emoji: '🛵', name: '外卖 / 快餐',     price: 16.71, unit: '单', monthly: 22 },
+    { emoji: '🍜', name: '餐厅（自己的份）', price: 22.70, unit: '顿', monthly: 12 },
+    { emoji: '☕', name: '奶茶',             price: 10.26, unit: '杯', monthly: 10 },
+    { emoji: '🛒', name: '买菜 / 超市',       price: 56.10, unit: '次', monthly: 8  },
+    { emoji: '🎭', name: '娱乐活动',         price: 74.15, unit: '次', monthly: 2  },
   ];
 
   const DISCRETIONARY = 3677;
+  const KEY = 'purchases_v1';
 
-  const priceEl   = document.getElementById('price');
-  const resultsEl = document.getElementById('results');
-  const emptyEl   = document.getElementById('empty');
-  const cardsEl   = document.getElementById('cards');
-  const summaryEl = document.getElementById('summary');
-  const budgetWrap    = document.getElementById('budgetWrap');
-  const budgetNumbers = document.getElementById('budgetNumbers');
-  const budgetBase    = document.getElementById('budgetBase');
-  const budgetItem    = document.getElementById('budgetItem');
+  function thisMonth() {
+    const d = new Date();
+    return `${d.getFullYear()}-${d.getMonth() + 1}`;
+  }
 
-  function update() {
-    const price = parseFloat(priceEl.value) || 0;
+  function load() {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return [];
+      const data = JSON.parse(raw);
+      if (data.month !== thisMonth()) return [];
+      return data.items || [];
+    } catch { return []; }
+  }
 
-    if (price <= 0) {
+  function save(items) {
+    localStorage.setItem(KEY, JSON.stringify({ month: thisMonth(), items }));
+  }
+
+  function render() {
+    const purchases = load();
+    const total = purchases.reduce((s, p) => s + p.amount, 0);
+
+    const historySection = document.getElementById('historySection');
+    const purchaseList   = document.getElementById('purchaseList');
+    const totalAmountEl  = document.getElementById('totalAmount');
+    const resultsEl      = document.getElementById('results');
+    const emptyEl        = document.getElementById('empty');
+    const cardsEl        = document.getElementById('cards');
+
+    if (purchases.length === 0) {
+      historySection.style.display = 'none';
       resultsEl.style.display = 'none';
-      emptyEl.style.display   = 'block';
-      budgetWrap.style.display = 'none';
+      emptyEl.style.display = 'block';
       return;
     }
 
+    historySection.style.display = 'block';
+    emptyEl.style.display = 'none';
     resultsEl.style.display = 'block';
-    emptyEl.style.display   = 'none';
-    budgetWrap.style.display = 'block';
 
-    // Budget bar
-    const pct = Math.min(price / DISCRETIONARY * 100, 100);
-    const remaining = Math.max(DISCRETIONARY - price, 0);
-    budgetNumbers.innerHTML = `
-      <span style="color:var(--red)">-$${price.toFixed(0)}</span>
-      <span style="color:var(--dim);margin:0 6px">/</span>
-      <span style="color:var(--cream)">$${DISCRETIONARY.toLocaleString()} 剩 $${remaining.toFixed(0)}</span>`;
-    budgetBase.style.width = (100 - pct) + '%';
-    budgetItem.style.left  = (100 - pct) + '%';
-    budgetItem.style.width = pct + '%';
+    // Purchase list
+    purchaseList.innerHTML = '';
+    purchases.forEach((p, i) => {
+      const row = document.createElement('div');
+      row.className = 'purchase-item';
+      row.innerHTML = `
+        <div class="purchase-info">
+          <span class="purchase-amount">$${p.amount.toFixed(0)}</span>
+          <span class="purchase-date">${p.date}</span>
+        </div>
+        <button class="delete-btn" data-i="${i}">&times;</button>`;
+      purchaseList.appendChild(row);
+    });
 
-    // Cards
+    totalAmountEl.textContent = `$${total.toFixed(0)}`;
+
+    purchaseList.querySelectorAll('.delete-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const items = load();
+        items.splice(parseInt(btn.dataset.i), 1);
+        save(items);
+        render();
+      });
+    });
+
+    // Impact cards
     cardsEl.innerHTML = '';
-    const summaryParts = [];
-
     ITEMS.forEach(item => {
-      const lostCount  = price / item.price;          // how many of THIS item costs the same
-      const monthlyBudgetForItem = item.price * item.monthly; // how much normally spent monthly
-      const lostFraction = price / monthlyBudgetForItem; // fraction of monthly usage lost
+      const lostCount    = total / item.price;
+      const lostFraction = total / (item.price * item.monthly);
+      const lostBubbles  = Math.min(Math.round(lostFraction * item.monthly), item.monthly);
+      const keptBubbles  = item.monthly - lostBubbles;
+      const lostDisplay  = lostCount >= 10 ? Math.round(lostCount) : lostCount.toFixed(1);
 
-      // Show emoji grid: how many of the monthly count get "crossed out"
-      const total = item.monthly;
-      const lostBubbles = Math.min(Math.round(lostFraction * total), total);
-      const keptBubbles = total - lostBubbles;
-
-      // Build bubble row
       let bubbles = '';
-      for (let i = 0; i < keptBubbles; i++) {
-        bubbles += `<div class="emoji-bubble kept">${item.emoji}</div>`;
-      }
-      for (let i = 0; i < lostBubbles; i++) {
-        bubbles += `<div class="emoji-bubble lost">${item.emoji}</div>`;
-      }
-      // Add the item itself
-      bubbles = `<div class="emoji-bubble item-bubble">这件东西</div><span style="color:var(--gold);font-size:18px;margin:0 4px">→</span>` + bubbles;
-
-      const lostDisplay = lostCount >= 10 ? Math.round(lostCount) : lostCount.toFixed(1);
+      for (let i = 0; i < keptBubbles; i++) bubbles += `<div class="emoji-bubble kept">${item.emoji}</div>`;
+      for (let i = 0; i < lostBubbles; i++) bubbles += `<div class="emoji-bubble lost">${item.emoji}</div>`;
 
       const card = document.createElement('div');
       card.className = 'tradeoff-card';
       card.innerHTML = `
         <div class="tradeoff-label">
-          花 <strong style="color:var(--gold-l)">$${price.toFixed(0)}</strong>，这个月的 <strong>${item.name}</strong> 少 ${lostDisplay} ${item.unit}
+          花了 <strong style="color:var(--gold-l)">$${total.toFixed(0)}</strong>，
+          这个月的 <strong>${item.name}</strong> 少 ${lostDisplay} ${item.unit}
         </div>
         <div class="emoji-row">${bubbles}</div>
         <div class="tradeoff-foot">
-          本月预计 <span>${total} ${item.unit}</span> ${item.name}，
-          其中 <span style="color:var(--red)">${lostBubbles} ${item.unit}</span>的预算被这件东西用掉了
+          本月预计 <span>${item.monthly} ${item.unit}</span> ${item.name}，
+          其中 <span style="color:var(--red)">${lostBubbles} ${item.unit}</span> 的预算被用掉了
         </div>`;
       cardsEl.appendChild(card);
-
-      if (lostBubbles > 0) {
-        summaryParts.push(`<span class="hl">${lostBubbles} ${item.unit}${item.name}</span>`);
-      }
     });
-
-    // // Summary sentence
-    // const topTwo = summaryParts.slice(0, 2);
-    // if (topTwo.length >= 2) {
-    //   summaryEl.innerHTML = `买了这个，这个月就要少吃 ${topTwo[0]}、少喝 ${summaryParts[2] || topTwo[1]}。预算就这么多，买了这个，别的就只能让步。`;
-    // } else if (topTwo.length === 1) {
-    //   summaryEl.innerHTML = `买了这个，这个月就要少 ${topTwo[0]}。`;
-    // } else {
-    //   summaryEl.innerHTML = `这件东西只占预算的一小部分，影响较小。`;
-    // }
   }
 
-  priceEl.addEventListener('input', update);
+  document.getElementById('addBtn').addEventListener('click', () => {
+    const val = parseFloat(document.getElementById('price').value);
+    if (!val || val <= 0) return;
+    const d = new Date();
+    const items = load();
+    items.push({ amount: val, date: `${d.getMonth()+1}/${d.getDate()}` });
+    save(items);
+    document.getElementById('price').value = '';
+    render();
+  });
+
+  document.getElementById('price').addEventListener('keydown', e => {
+    if (e.key === 'Enter') document.getElementById('addBtn').click();
+  });
+
+  document.getElementById('resetBtn').addEventListener('click', () => {
+    if (confirm('清空本月所有记录？')) { save([]); render(); }
+  });
+
+  render();
 </script>
 </body>
 </html>
