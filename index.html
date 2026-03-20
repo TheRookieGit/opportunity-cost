@@ -125,39 +125,44 @@
   </div>
 
 </div>
-<script>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAf8v-kiuEJUAWXGnRuc9I5YXCvQ2nXZw8",
+    authDomain: "budget-opportunity-cost.firebaseapp.com",
+    databaseURL: "https://budget-opportunity-cost-default-rtdb.firebaseio.com",
+    projectId: "budget-opportunity-cost",
+    storageBucket: "budget-opportunity-cost.firebasestorage.app",
+    messagingSenderId: "859996459224",
+    appId: "1:859996459224:web:a9323cbc9693a4d26787ad"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const db  = getDatabase(app);
+
   const ITEMS = [
     { emoji: '🛵', name: '外卖 / 快餐',     price: 16.71, unit: '单', monthly: 22 },
     { emoji: '🍜', name: '餐厅（自己的份）', price: 22.70, unit: '顿', monthly: 12 },
-    { emoji: '☕', name: '奶茶',             price: 10.26, unit: '杯', monthly: 10 },
+    { emoji: '☕',     name: '奶茶',             price: 10.26, unit: '杯', monthly: 10 },
     { emoji: '🛒', name: '买菜 / 超市',       price: 56.10, unit: '次', monthly: 8  },
     { emoji: '🎭', name: '娱乐活动',         price: 74.15, unit: '次', monthly: 2  },
   ];
 
   const DISCRETIONARY = 3677;
-  const KEY = 'purchases_v1';
 
   function thisMonth() {
     const d = new Date();
     return `${d.getFullYear()}-${d.getMonth() + 1}`;
   }
 
-  function load() {
-    try {
-      const raw = localStorage.getItem(KEY);
-      if (!raw) return [];
-      const data = JSON.parse(raw);
-      if (data.month !== thisMonth()) return [];
-      return data.items || [];
-    } catch { return []; }
+  function dbRef() {
+    return ref(db, `purchases/${thisMonth()}`);
   }
 
-  function save(items) {
-    localStorage.setItem(KEY, JSON.stringify({ month: thisMonth(), items }));
-  }
-
-  function render() {
-    const purchases = load();
+  function render(purchases) {
+    purchases = purchases || [];
     const total = purchases.reduce((s, p) => s + p.amount, 0);
 
     const historySection = document.getElementById('historySection');
@@ -196,10 +201,9 @@
 
     purchaseList.querySelectorAll('.delete-btn').forEach(btn => {
       btn.addEventListener('click', () => {
-        const items = load();
-        items.splice(parseInt(btn.dataset.i), 1);
-        save(items);
-        render();
+        const newItems = [...purchases];
+        newItems.splice(parseInt(btn.dataset.i), 1);
+        set(dbRef(), newItems);
       });
     });
 
@@ -232,26 +236,37 @@
     });
   }
 
+  // Listen for real-time changes
+  onValue(dbRef(), (snapshot) => {
+    const data = snapshot.val();
+    render(data || []);
+  });
+
+  // Add purchase
   document.getElementById('addBtn').addEventListener('click', () => {
     const val = parseFloat(document.getElementById('price').value);
     if (!val || val <= 0) return;
     const d = new Date();
-    const items = load();
-    items.push({ amount: val, date: `${d.getMonth()+1}/${d.getDate()}` });
-    save(items);
-    document.getElementById('price').value = '';
-    render();
+    // Read current, then append
+    onValue(dbRef(), (snapshot) => {
+      const current = snapshot.val() || [];
+      current.push({ amount: val, date: `${d.getMonth()+1}/${d.getDate()}` });
+      set(dbRef(), current);
+      document.getElementById('price').value = '';
+    }, { onlyOnce: true });
   });
 
   document.getElementById('price').addEventListener('keydown', e => {
     if (e.key === 'Enter') document.getElementById('addBtn').click();
   });
 
+  // Reset
   document.getElementById('resetBtn').addEventListener('click', () => {
-    if (confirm('清空本月所有记录？')) { save([]); render(); }
+    if (confirm('清空本月所有记录？')) {
+      remove(dbRef());
+    }
   });
 
-  render();
 </script>
 </body>
 </html>
