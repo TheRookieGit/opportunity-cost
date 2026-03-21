@@ -19,74 +19,79 @@
   }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--cream); font-family: 'Noto Sans SC', sans-serif; min-height: 100vh; }
-
   .page {
     max-width: 680px; margin: 0 auto;
     padding: max(40px, env(safe-area-inset-top)) max(24px, env(safe-area-inset-right)) max(80px, env(safe-area-inset-bottom)) max(24px, env(safe-area-inset-left));
   }
-
   h1 { font-family: 'Cormorant Garamond', serif; font-size: 32px; font-weight: 300; text-align: center; color: var(--cream); margin-bottom: 6px; letter-spacing: 0.03em; }
   h1 em { font-style: italic; color: var(--gold-l); }
   .sub { text-align: center; font-size: 12px; color: var(--dim); font-family: 'DM Mono', monospace; letter-spacing: 0.12em; margin-bottom: 36px; }
-
-  /* Input */
-  .input-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px 24px 20px; margin-bottom: 16px; }
+  .input-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 16px; }
   .input-row { display: flex; gap: 12px; align-items: flex-end; }
   .field { display: flex; flex-direction: column; gap: 7px; flex: 1; }
   .field label { font-family: 'DM Mono', monospace; font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
-  .field input { background: var(--card2); border: 1px solid rgba(201,168,76,0.22); border-radius: 6px; padding: 12px 14px; color: var(--cream); font-family: 'Noto Sans SC', sans-serif; font-size: 15px; outline: none; transition: border-color 0.2s; width: 100%; }
+  .field input { background: var(--card2); border: 1px solid rgba(201,168,76,0.22); border-radius: 6px; padding: 12px 14px; color: var(--cream); font-size: 15px; outline: none; transition: border-color 0.2s; width: 100%; font-family: 'Noto Sans SC', sans-serif; }
   .field input:focus { border-color: var(--gold); }
   .price-wrap { position: relative; }
   .price-wrap::before { content: '$'; position: absolute; left: 13px; top: 50%; transform: translateY(-50%); color: var(--gold); font-family: 'DM Mono', monospace; font-size: 13px; pointer-events: none; }
   .price-wrap input { padding-left: 26px; font-size: 22px; font-weight: 500; color: var(--gold-l); }
-  .add-btn { padding: 13px 22px; background: var(--gold); border: none; border-radius: 6px; color: #0d1b2a; font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; }
-  .add-btn:active { opacity: 0.75; }
-
-  /* History */
+  .next-btn { padding: 13px 22px; background: var(--gold); border: none; border-radius: 6px; color: #0d1b2a; font-size: 15px; font-weight: 700; cursor: pointer; white-space: nowrap; flex-shrink: 0; font-family: 'Noto Sans SC', sans-serif; }
+  .next-btn:active { opacity: 0.75; }
+  .cat-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 24px; margin-bottom: 16px; display: none; }
+  .cat-card.visible { display: block; }
+  .cat-prompt { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; }
+  .cat-prompt em { font-style: normal; color: var(--gold-l); font-size: 15px; font-family: 'Noto Sans SC', sans-serif; letter-spacing: 0; text-transform: none; }
+  .cat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .cat-btn { display: flex; flex-direction: column; gap: 10px; background: var(--card2); border: 1px solid var(--border); border-radius: 8px; padding: 14px; cursor: pointer; text-align: left; width: 100%; transition: border-color 0.15s; }
+  .cat-btn:hover { border-color: var(--gold); }
+  .cat-btn:active { background: rgba(201,168,76,0.08); }
+  .cat-top { display: flex; align-items: center; gap: 10px; }
+  .cat-emoji { font-size: 22px; flex-shrink: 0; }
+  .cat-name { font-size: 13px; font-weight: 500; color: var(--cream); display: block; }
+  .cat-lost { font-size: 11px; color: var(--dim); display: block; margin-top: 2px; }
+  .cat-lost strong { color: var(--red); }
+  .mini-strip { display: flex; flex-wrap: wrap; gap: 3px; }
+  .mini { font-size: 13px; width: 20px; height: 20px; display: inline-flex; align-items: center; justify-content: center; border-radius: 4px; position: relative; flex-shrink: 0; }
+  .mini.kept { background: rgba(76,175,130,0.15); }
+  .mini.lost { opacity: 0.35; background: rgba(224,92,75,0.1); }
+  .mini.lost::after { content: '✕'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 8px; color: var(--red); font-weight: 700; background: rgba(13,27,42,0.45); border-radius: 4px; }
+  .cat-back { margin-top: 14px; background: none; border: none; color: var(--dim); font-family: 'DM Mono', monospace; font-size: 11px; cursor: pointer; padding: 4px 0; letter-spacing: 0.05em; }
   .history { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 16px 18px; margin-bottom: 24px; }
   .history-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
   .history-title { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--gold); }
-  .reset-btn { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--red); background: none; border: 1px solid rgba(224,92,75,0.3); border-radius: 4px; padding: 4px 10px; cursor: pointer; letter-spacing: 0.05em; }
-  .reset-btn:active { opacity: 0.7; }
-
+  .reset-btn { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--red); background: none; border: 1px solid rgba(224,92,75,0.3); border-radius: 4px; padding: 4px 10px; cursor: pointer; }
   .purchase-list { display: flex; flex-direction: column; gap: 6px; margin-bottom: 10px; }
   .purchase-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 10px; background: var(--card2); border-radius: 6px; }
-  .purchase-info { display: flex; gap: 10px; align-items: baseline; }
+  .purchase-info { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .purchase-emoji { font-size: 16px; }
   .purchase-amount { font-family: 'DM Mono', monospace; font-size: 15px; font-weight: 500; color: var(--gold-l); }
+  .purchase-cat { font-size: 11px; color: var(--dim); }
   .purchase-date { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--dim); }
-  .delete-btn { background: none; border: none; color: var(--dim); font-size: 20px; cursor: pointer; padding: 0 2px; line-height: 1; }
-  .delete-btn:active { color: var(--red); }
-
+  .del-btn { background: none; border: none; color: var(--dim); font-size: 22px; cursor: pointer; padding: 0 4px; line-height: 1; flex-shrink: 0; }
+  .del-btn:active { color: var(--red); }
   .total-row { display: flex; justify-content: space-between; align-items: center; padding-top: 10px; border-top: 1px solid var(--border); }
   .total-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--dim); }
   .total-amount { font-family: 'DM Mono', monospace; font-size: 18px; font-weight: 500; color: var(--red); }
-
-  /* Section */
   .sec { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--gold); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
   .sec::after { content: ''; flex: 1; height: 1px; background: var(--border); }
-
-  /* Cards */
-  .tradeoff-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px 20px 16px; margin-bottom: 16px; }
+  .tradeoff-card { background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 20px; margin-bottom: 16px; }
   .tradeoff-label { font-size: 13px; color: var(--dim); margin-bottom: 14px; line-height: 1.6; }
-  .emoji-row { display: flex; flex-wrap: wrap; gap: 5px; min-height: 34px; align-items: center; }
+  .emoji-row { display: flex; flex-wrap: wrap; gap: 5px; min-height: 34px; }
   .emoji-bubble { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 19px; position: relative; }
   .emoji-bubble.kept { background: rgba(76,175,130,0.15); border: 1px solid rgba(76,175,130,0.3); }
   .emoji-bubble.lost { background: rgba(224,92,75,0.1); border: 1px solid rgba(224,92,75,0.3); opacity: 0.4; }
   .emoji-bubble.lost::after { content: '✕'; position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; color: var(--red); font-weight: 700; background: rgba(13,27,42,0.5); border-radius: 7px; }
   .tradeoff-foot { margin-top: 10px; font-size: 11px; color: var(--dim); font-family: 'DM Mono', monospace; }
   .tradeoff-foot span { color: var(--cream); }
-
-  /* Empty */
   .empty { text-align: center; padding: 50px 0 30px; }
   .empty-icon { font-size: 40px; opacity: 0.25; margin-bottom: 14px; }
   .empty-text { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 18px; color: var(--dim); }
-
-  @media (max-width: 500px) { h1 { font-size: 26px; } }
+  .status { text-align: center; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--dim); margin-bottom: 12px; }
+  @media (max-width: 480px) { h1 { font-size: 26px; } .cat-grid { grid-template-columns: 1fr; } }
 </style>
 </head>
 <body>
 <div class="page">
-
   <h1>买了这个，<em>就少吃这些</em></h1>
   <div class="sub">月预算 $5,500 · 可支配 $3,677 · 基于真实消费数据</div>
 
@@ -98,8 +103,14 @@
           <input id="price" type="number" placeholder="0" min="0" step="1" inputmode="numeric">
         </div>
       </div>
-      <button class="add-btn" id="addBtn">加入</button>
+      <button id="nextBtn" class="next-btn">下一步 →</button>
     </div>
+  </div>
+
+  <div class="cat-card" id="catCard">
+    <div class="cat-prompt">这笔钱花在哪里？&nbsp;<em id="catPriceLabel"></em></div>
+    <div class="cat-grid" id="catGrid"></div>
+    <button class="cat-back" id="catBack">← 重新输入金额</button>
   </div>
 
   <div class="history" id="historySection" style="display:none">
@@ -123,13 +134,26 @@
     <div class="sec">加起来，这个月就少了…</div>
     <div id="cards"></div>
   </div>
-
 </div>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, set, onValue, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
-  const firebaseConfig = {
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js" onload="onFirebaseLoad()" onerror="onFirebaseError()"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+var ITEMS = [
+  { emoji: '🛵', name: '外卖 / 快餐',     price: 16.71, unit: '单', monthly: 22 },
+  { emoji: '🍜', name: '餐厅（自己的份）', price: 22.70, unit: '顿', monthly: 12 },
+  { emoji: '☕', name: '奶茶',             price: 10.26, unit: '杯', monthly: 10 },
+  { emoji: '🛒', name: '买菜 / 超市',     price: 56.10, unit: '次', monthly: 8  },
+  { emoji: '🎭', name: '娱乐活动',         price: 74.15, unit: '次', monthly: 2  },
+];
+
+var pendingPrice = null;
+var dbRef = null;
+
+// ── Firebase setup ────────────────────────────────────────────
+function onFirebaseLoad() {
+  firebase.initializeApp({
     apiKey: "AIzaSyAf8v-kiuEJUAWXGnRuc9I5YXCvQ2nXZw8",
     authDomain: "budget-opportunity-cost.firebaseapp.com",
     databaseURL: "https://budget-opportunity-cost-default-rtdb.firebaseio.com",
@@ -137,136 +161,205 @@
     storageBucket: "budget-opportunity-cost.firebasestorage.app",
     messagingSenderId: "859996459224",
     appId: "1:859996459224:web:a9323cbc9693a4d26787ad"
-  };
+  });
+  var db = firebase.database();
+  var month = getMonth();
+  dbRef = db.ref('purchases/' + month);
+  dbRef.on('value', function(snap) {
+    render(snap.val() || []);
+  });
+}
 
-  const app = initializeApp(firebaseConfig);
-  const db  = getDatabase(app);
+function onFirebaseError() {
+  // Fallback to localStorage if Firebase fails to load
+  console.warn('Firebase failed, using localStorage');
+  render(localLoad());
+}
 
-  const ITEMS = [
-    { emoji: '🛵', name: '外卖 / 快餐',     price: 16.71, unit: '单', monthly: 22 },
-    { emoji: '🍜', name: '餐厅（自己的份）', price: 22.70, unit: '顿', monthly: 12 },
-    { emoji: '☕',     name: '奶茶',             price: 10.26, unit: '杯', monthly: 10 },
-    { emoji: '🛒', name: '买菜 / 超市',       price: 56.10, unit: '次', monthly: 8  },
-    { emoji: '🎭', name: '娱乐活动',         price: 74.15, unit: '次', monthly: 2  },
-  ];
+function getMonth() {
+  var d = new Date();
+  return d.getFullYear() + '-' + (d.getMonth() + 1);
+}
 
-  const DISCRETIONARY = 3677;
+// localStorage fallback helpers
+function localLoad() {
+  try {
+    var raw = localStorage.getItem('purchases_v1');
+    if (!raw) return [];
+    var data = JSON.parse(raw);
+    if (data.month !== getMonth()) return [];
+    return data.items || [];
+  } catch(e) { return []; }
+}
+function localSave(items) {
+  localStorage.setItem('purchases_v1', JSON.stringify({ month: getMonth(), items: items }));
+}
 
-  function thisMonth() {
-    const d = new Date();
-    return `${d.getFullYear()}-${d.getMonth() + 1}`;
+function saveData(items) {
+  if (dbRef) {
+    dbRef.set(items);
+  } else {
+    localSave(items);
+    render(items);
+  }
+}
+
+function loadData(cb) {
+  if (dbRef) {
+    dbRef.once('value').then(function(snap) { cb(snap.val() || []); });
+  } else {
+    cb(localLoad());
+  }
+}
+
+// ── UI ────────────────────────────────────────────────────────
+document.getElementById('nextBtn').onclick = function() {
+  var val = parseFloat(document.getElementById('price').value);
+  if (!val || val <= 0) return;
+  pendingPrice = val;
+  document.getElementById('catPriceLabel').textContent = '$' + val.toFixed(0);
+  buildCatGrid(val);
+  document.getElementById('catCard').classList.add('visible');
+};
+
+document.getElementById('price').onkeydown = function(e) {
+  if (e.key === 'Enter') document.getElementById('nextBtn').click();
+};
+
+document.getElementById('catBack').onclick = function() {
+  document.getElementById('catCard').classList.remove('visible');
+  pendingPrice = null;
+};
+
+document.getElementById('resetBtn').onclick = function() {
+  if (confirm('清空本月所有记录？')) {
+    if (dbRef) dbRef.remove();
+    else { localSave([]); render([]); }
+  }
+};
+
+function buildCatGrid(price) {
+  var grid = document.getElementById('catGrid');
+  grid.innerHTML = '';
+  ITEMS.forEach(function(item, idx) {
+    var lost = price / item.price;
+    var lostDisplay = lost >= 10 ? Math.round(lost) : lost.toFixed(1);
+    var show = Math.min(item.monthly, 10);
+    var lostN = Math.min(Math.round((price / (item.price * item.monthly)) * show), show);
+    var keptN = show - lostN;
+
+    var strip = '';
+    for (var i = 0; i < keptN; i++) strip += '<span class="mini kept">' + item.emoji + '</span>';
+    for (var i = 0; i < lostN; i++) strip += '<span class="mini lost">' + item.emoji + '</span>';
+
+    var btn = document.createElement('button');
+    btn.className = 'cat-btn';
+    btn.innerHTML =
+      '<div class="cat-top">' +
+        '<span class="cat-emoji">' + item.emoji + '</span>' +
+        '<div>' +
+          '<span class="cat-name">' + item.name + '</span>' +
+          '<span class="cat-lost">少 <strong>' + lostDisplay + ' ' + item.unit + '</strong></span>' +
+        '</div>' +
+      '</div>' +
+      '<div class="mini-strip">' + strip + '</div>';
+
+    btn.onclick = (function(i) {
+      return function() { confirmAdd(i); };
+    })(idx);
+
+    grid.appendChild(btn);
+  });
+}
+
+function confirmAdd(itemIdx) {
+  if (!pendingPrice) return;
+  var d = new Date();
+  var entry = { amount: pendingPrice, itemIdx: itemIdx, date: (d.getMonth()+1) + '/' + d.getDate() };
+  loadData(function(current) {
+    current.push(entry);
+    saveData(current);
+    document.getElementById('price').value = '';
+    document.getElementById('catCard').classList.remove('visible');
+    pendingPrice = null;
+  });
+}
+
+// ── Render ────────────────────────────────────────────────────
+function render(purchases) {
+  purchases = purchases || [];
+  var total = 0;
+  for (var i = 0; i < purchases.length; i++) total += purchases[i].amount;
+
+  var histSec = document.getElementById('historySection');
+  var pList   = document.getElementById('purchaseList');
+  var totEl   = document.getElementById('totalAmount');
+  var resEl   = document.getElementById('results');
+  var emptyEl = document.getElementById('empty');
+  var cardsEl = document.getElementById('cards');
+
+  if (purchases.length === 0) {
+    histSec.style.display = 'none';
+    resEl.style.display   = 'none';
+    emptyEl.style.display = 'block';
+    return;
   }
 
-  function dbRef() {
-    return ref(db, `purchases/${thisMonth()}`);
-  }
+  histSec.style.display = 'block';
+  emptyEl.style.display = 'none';
+  resEl.style.display   = 'block';
 
-  function render(purchases) {
-    purchases = purchases || [];
-    const total = purchases.reduce((s, p) => s + p.amount, 0);
+  pList.innerHTML = '';
+  purchases.forEach(function(p, i) {
+    var item = ITEMS[p.itemIdx] || { emoji: '💳', name: '' };
+    var row = document.createElement('div');
+    row.className = 'purchase-item';
+    row.innerHTML =
+      '<div class="purchase-info">' +
+        '<span class="purchase-emoji">' + item.emoji + '</span>' +
+        '<span class="purchase-amount">$' + p.amount.toFixed(0) + '</span>' +
+        '<span class="purchase-cat">' + item.name + '</span>' +
+        '<span class="purchase-date">' + p.date + '</span>' +
+      '</div>' +
+      '<button class="del-btn" data-i="' + i + '">&times;</button>';
+    pList.appendChild(row);
+  });
 
-    const historySection = document.getElementById('historySection');
-    const purchaseList   = document.getElementById('purchaseList');
-    const totalAmountEl  = document.getElementById('totalAmount');
-    const resultsEl      = document.getElementById('results');
-    const emptyEl        = document.getElementById('empty');
-    const cardsEl        = document.getElementById('cards');
+  totEl.textContent = '$' + total.toFixed(0);
 
-    if (purchases.length === 0) {
-      historySection.style.display = 'none';
-      resultsEl.style.display = 'none';
-      emptyEl.style.display = 'block';
-      return;
-    }
-
-    historySection.style.display = 'block';
-    emptyEl.style.display = 'none';
-    resultsEl.style.display = 'block';
-
-    // Purchase list
-    purchaseList.innerHTML = '';
-    purchases.forEach((p, i) => {
-      const row = document.createElement('div');
-      row.className = 'purchase-item';
-      row.innerHTML = `
-        <div class="purchase-info">
-          <span class="purchase-amount">$${p.amount.toFixed(0)}</span>
-          <span class="purchase-date">${p.date}</span>
-        </div>
-        <button class="delete-btn" data-i="${i}">&times;</button>`;
-      purchaseList.appendChild(row);
-    });
-
-    totalAmountEl.textContent = `$${total.toFixed(0)}`;
-
-    purchaseList.querySelectorAll('.delete-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const newItems = [...purchases];
-        newItems.splice(parseInt(btn.dataset.i), 1);
-        set(dbRef(), newItems);
+  pList.querySelectorAll('.del-btn').forEach(function(btn) {
+    btn.onclick = function() {
+      var idx = parseInt(btn.getAttribute('data-i'));
+      loadData(function(items) {
+        items.splice(idx, 1);
+        saveData(items);
       });
-    });
-
-    // Impact cards
-    cardsEl.innerHTML = '';
-    ITEMS.forEach(item => {
-      const lostCount    = total / item.price;
-      const lostFraction = total / (item.price * item.monthly);
-      const lostBubbles  = Math.min(Math.round(lostFraction * item.monthly), item.monthly);
-      const keptBubbles  = item.monthly - lostBubbles;
-      const lostDisplay  = lostCount >= 10 ? Math.round(lostCount) : lostCount.toFixed(1);
-
-      let bubbles = '';
-      for (let i = 0; i < keptBubbles; i++) bubbles += `<div class="emoji-bubble kept">${item.emoji}</div>`;
-      for (let i = 0; i < lostBubbles; i++) bubbles += `<div class="emoji-bubble lost">${item.emoji}</div>`;
-
-      const card = document.createElement('div');
-      card.className = 'tradeoff-card';
-      card.innerHTML = `
-        <div class="tradeoff-label">
-          花了 <strong style="color:var(--gold-l)">$${total.toFixed(0)}</strong>，
-          这个月的 <strong>${item.name}</strong> 少 ${lostDisplay} ${item.unit}
-        </div>
-        <div class="emoji-row">${bubbles}</div>
-        <div class="tradeoff-foot">
-          本月预计 <span>${item.monthly} ${item.unit}</span> ${item.name}，
-          其中 <span style="color:var(--red)">${lostBubbles} ${item.unit}</span> 的预算被用掉了
-        </div>`;
-      cardsEl.appendChild(card);
-    });
-  }
-
-  // Listen for real-time changes
-  onValue(dbRef(), (snapshot) => {
-    const data = snapshot.val();
-    render(data || []);
+    };
   });
 
-  // Add purchase
-  document.getElementById('addBtn').addEventListener('click', () => {
-    const val = parseFloat(document.getElementById('price').value);
-    if (!val || val <= 0) return;
-    const d = new Date();
-    // Read current, then append
-    onValue(dbRef(), (snapshot) => {
-      const current = snapshot.val() || [];
-      current.push({ amount: val, date: `${d.getMonth()+1}/${d.getDate()}` });
-      set(dbRef(), current);
-      document.getElementById('price').value = '';
-    }, { onlyOnce: true });
-  });
+  cardsEl.innerHTML = '';
+  ITEMS.forEach(function(item) {
+    var lostCount   = total / item.price;
+    var lostFrac    = total / (item.price * item.monthly);
+    var lostB       = Math.min(Math.round(lostFrac * item.monthly), item.monthly);
+    var keptB       = item.monthly - lostB;
+    var lostDisplay = lostCount >= 10 ? Math.round(lostCount) : lostCount.toFixed(1);
 
-  document.getElementById('price').addEventListener('keydown', e => {
-    if (e.key === 'Enter') document.getElementById('addBtn').click();
-  });
+    var bubbles = '';
+    for (var i = 0; i < keptB; i++) bubbles += '<div class="emoji-bubble kept">' + item.emoji + '</div>';
+    for (var i = 0; i < lostB; i++) bubbles += '<div class="emoji-bubble lost">' + item.emoji + '</div>';
 
-  // Reset
-  document.getElementById('resetBtn').addEventListener('click', () => {
-    if (confirm('清空本月所有记录？')) {
-      remove(dbRef());
-    }
+    var card = document.createElement('div');
+    card.className = 'tradeoff-card';
+    card.innerHTML =
+      '<div class="tradeoff-label">花了 <strong style="color:var(--gold-l)">$' + total.toFixed(0) + '</strong>，' +
+      '这个月的 <strong>' + item.name + '</strong> 少 ' + lostDisplay + ' ' + item.unit + '</div>' +
+      '<div class="emoji-row">' + bubbles + '</div>' +
+      '<div class="tradeoff-foot">本月预计 <span>' + item.monthly + ' ' + item.unit + '</span> ' + item.name +
+      '，其中 <span style="color:var(--red)">' + lostB + ' ' + item.unit + '</span> 的预算被用掉了</div>';
+    cardsEl.appendChild(card);
   });
-
+}
 </script>
 </body>
 </html>
